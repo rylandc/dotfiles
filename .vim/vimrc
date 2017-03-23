@@ -1,0 +1,44 @@
+set nocompatible    "required for Vundle
+filetype off        "^^
+
+" set runtime path to include Vundle and initialize
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+" alternatively, pass a path where Vundle should install plugins
+" call vundle#begin('~/some/path/here')
+
+"let Vundle manage Vundle, required
+Plugin 'VundleVim/Vundle.vim'
+
+Plugin 'vim-airline/vim-airline'
+Plugin 'vim-airline/vim-airline-themes'
+Plugin 'scrooloose/nerdtree'
+
+"All Plugins msut be added before following line
+call vundle#end()   "required
+filetype plugin indent on
+"To ignore plugin indent changes, use:
+"filetype plugin on
+"
+"Help :
+":PluginList    -lists configured plugins
+":PluginInstall -installs plugins; append '!' to update or use :PluginUpdate
+":PluginSearch foo -searches for foo; append '!' to refresh local cache
+":PluginClean   -confirms removal of unused plugins; append '!' to autoapprove
+
+set laststatus=2
+let g:airline_theme='luna'
+"let g:airline_powerline_fonts = 1
+"if !exists('g:airline_symbols')
+"    let g:airline_symbols = {}
+"endif
+
+set number          "line numbers on
+syntax enable       "syntax on
+set tabstop=4       "tabs are 4 spaces wide
+set shiftwidth=4
+set expandtab
+
+"if &term == "screen"
+"    set t-Co=256
+"endif
