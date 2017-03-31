@@ -1,21 +1,25 @@
 set nocompatible    "required for Vundle
-filetype off        "^^
+filetype off
+
+let isWindows = has('win32')
 
 " set runtime path to include Vundle and initialize
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
-" alternatively, pass a path where Vundle should install plugins
-" call vundle#begin('~/some/path/here')
+if isWindows
+    set rtp+=$HOME/vimfiles/bundle/Vundle.vim/
+    call vundle#begin('$HOME/vimfiles/bundle/')
+else
+    set rtp+=~/.vim/bundle/Vundle.vim
+    call vundle#begin()
+endif
 
-"let Vundle manage Vundle, required
 Plugin 'VundleVim/Vundle.vim'
-
 Plugin 'vim-airline/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
 Plugin 'scrooloose/nerdtree'
 
-"All Plugins msut be added before following line
-call vundle#end()   "required
+"All Plugins must be added before following line
+call vundle#end()
+
 filetype plugin indent on
 "To ignore plugin indent changes, use:
 "filetype plugin on
@@ -26,19 +30,61 @@ filetype plugin indent on
 ":PluginSearch foo -searches for foo; append '!' to refresh local cache
 ":PluginClean   -confirms removal of unused plugins; append '!' to autoapprove
 
-set laststatus=2
-let g:airline_theme='luna'
-"let g:airline_powerline_fonts = 1
-"if !exists('g:airline_symbols')
-"    let g:airline_symbols = {}
-"endif
 
+"airline plugin
+set laststatus=2    "show statusline
+let g:airline_theme='luna'
+let g:airline#extensions#tabline#enabled = 1
+let g:airline_powerline_fonts = 1
+
+if !exists('g:airline_symbols')
+    let g:airline_symbols = {}
+endif
+
+" unicode symbols
+let g:airline_left_sep = '»'
+let g:airline_left_sep = '▶'
+let g:airline_right_sep = '«'
+let g:airline_right_sep = '◀'
+let g:airline_symbols.linenr = '␊'
+let g:airline_symbols.linenr = '␤'
+let g:airline_symbols.linenr = '¶'
+let g:airline_symbols.branch = '⎇'
+let g:airline_symbols.paste = 'ρ'
+let g:airline_symbols.paste = 'Þ'
+let g:airline_symbols.paste = '∥'
+let g:airline_symbols.whitespace = 'Ξ'
+
+" airline symbols
+let g:airline_left_sep = ''
+let g:airline_left_alt_sep = ''
+let g:airline_right_sep = ''
+let g:airline_right_alt_sep = ''
+let g:airline_symbols.branch = ''
+let g:airline_symbols.readonly = ''
+let g:airline_symbols.linenr = ''
+
+set cursorline
 set number          "line numbers on
-syntax enable       "syntax on
+syntax enable
+set showmatch       "highlight matching braces
+
 set tabstop=4       "tabs are 4 spaces wide
 set shiftwidth=4
 set expandtab
 
-"if &term == "screen"
-"    set t-Co=256
-"endif
+set encoding=utf-8
+
+if has('gui_running')
+    set gcr=a:blinkoff0
+    colorscheme industry
+    set guifont=DejaVu\ Sans\ Mono\ for\ Powerline:h10
+endif
+
+nnoremap <C-J> <C-W><C-J>
+nnoremap <C-K> <C-W><C-K>
+nnoremap <C-L> <C-W><C-L>
+nnoremap <C-H> <C-W><C-H>
+
+set nobackup
+set noswapfile
