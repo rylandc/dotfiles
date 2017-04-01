@@ -23,13 +23,11 @@ call vundle#end()
 filetype plugin indent on
 "To ignore plugin indent changes, use:
 "filetype plugin on
-"
 "Help :
 ":PluginList    -lists configured plugins
 ":PluginInstall -installs plugins; append '!' to update or use :PluginUpdate
 ":PluginSearch foo -searches for foo; append '!' to refresh local cache
 ":PluginClean   -confirms removal of unused plugins; append '!' to autoapprove
-
 
 "airline plugin
 set laststatus=2    "show statusline
@@ -64,27 +62,46 @@ let g:airline_symbols.branch = ''
 let g:airline_symbols.readonly = ''
 let g:airline_symbols.linenr = ''
 
+set encoding=utf-8
+
+set noerrorbells
+set lazyredraw
 set cursorline
+set scrolloff=999
 set number          "line numbers on
 syntax enable
 set showmatch       "highlight matching braces
+highlight ColorColumn ctermbg=magenta
+call matchadd('ColorColumn', '\%81v', 100)  "highlight 81st column
 
 set tabstop=4       "tabs are 4 spaces wide
 set shiftwidth=4
 set expandtab
 
-set encoding=utf-8
+
+set list
+set listchars=tab:▷┄,trail:♡,eol:¬
 
 if has('gui_running')
     set gcr=a:blinkoff0
-    colorscheme industry
-    set guifont=DejaVu\ Sans\ Mono\ for\ Powerline:h10
+    set guifont=DejaVu\ Sans\ Mono\ for\ Powerline:h11
+else
+    if isWindows
+        let g:solarized_termcolors=16
+    else
+        let g:solarized_termcolors=256
+    endif
 endif
+
+set background=dark
+colorscheme solarized
 
 nnoremap <C-J> <C-W><C-J>
 nnoremap <C-K> <C-W><C-K>
 nnoremap <C-L> <C-W><C-L>
 nnoremap <C-H> <C-W><C-H>
+inoremap jk <Esc>
 
-set nobackup
+set nobackup    "no swap and backup files
 set noswapfile
+set viminfo=
