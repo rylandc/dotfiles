@@ -91,7 +91,7 @@ else
     if isWindows
         colorscheme elflord "give up on cmd colors
     else
-        set background dark
+        set background=dark
         colorscheme solarized
     endif
 endif
