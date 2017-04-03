@@ -80,21 +80,21 @@ set expandtab
 
 
 set list
-set listchars=tab:▷┄,trail:♡,eol:¬
+set listchars=tab:\|┄,trail:♡,eol:¬
 
 if has('gui_running')
     set gcr=a:blinkoff0
     set guifont=DejaVu\ Sans\ Mono\ for\ Powerline:h11
+    set background=dark
+    colorscheme solarized
 else
     if isWindows
-        let g:solarized_termcolors=16
+        colorscheme elflord "give up on cmd colors
     else
-        let g:solarized_termcolors=256
+        set backgound dark
+        colorscheme solarized
     endif
 endif
-
-set background=dark
-colorscheme solarized
 
 nnoremap <C-J> <C-W><C-J>
 nnoremap <C-K> <C-W><C-K>
