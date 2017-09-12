@@ -1,39 +1,30 @@
-set nocompatible    "required for Vundle
+set nocompatible
 filetype off
 
 let isWindows = has('win32')
 
-" set runtime path to include Vundle and initialize
 if isWindows
-    set rtp+=$HOME/vimfiles/bundle/Vundle.vim/
-    call vundle#begin('$HOME/vimfiles/bundle/')
+    set rtp^=$HOME/vimfiles/bundle/vim-airline
+    set rtp^=$HOME/vimfiles/bundle/vim-airline-themes
+    set rtp^=$HOME/vimfiles/bundle/nerdtree
+    set rtp^=$HOME/vimfiles/bundle/vim-fugitive
+    set rtp^=$HOME/vimfiles/bundle/syntastic
 else
-    set rtp+=~/.vim/bundle/Vundle.vim
-    call vundle#begin()
+    set rtp^=~/.vim/bundle/vim-airline
+    set rtp^=~/.vim/bundle/vim-airline-themes
+    set rtp^=~/.vim/bundle/nerdtree
+    set rtp^=~/.vim/bundle/vim-fugitive
+    set rtp^=~/.vim/bundle/syntastic
 endif
 
-Plugin 'VundleVim/Vundle.vim'
-Plugin 'vim-airline/vim-airline'
-Plugin 'vim-airline/vim-airline-themes'
-Plugin 'scrooloose/nerdtree'
-
-"All Plugins must be added before following line
-call vundle#end()
-
 filetype plugin indent on
-"To ignore plugin indent changes, use:
-"filetype plugin on
-"Help :
-":PluginList    -lists configured plugins
-":PluginInstall -installs plugins; append '!' to update or use :PluginUpdate
-":PluginSearch foo -searches for foo; append '!' to refresh local cache
-":PluginClean   -confirms removal of unused plugins; append '!' to autoapprove
 
-"airline plugin
+" airline
 set laststatus=2    "show statusline
 let g:airline_theme='luna'
 let g:airline#extensions#tabline#enabled = 1
 let g:airline_powerline_fonts = 1
+let g:airline#extensions#syntastic#enabled = 1
 
 if !exists('g:airline_symbols')
     let g:airline_symbols = {}
@@ -62,25 +53,36 @@ let g:airline_symbols.branch = ''
 let g:airline_symbols.readonly = ''
 let g:airline_symbols.linenr = ''
 
-set encoding=utf-8
+" syntastic
+set statusline+=%#warningmsg#
+set statusline+=%{SynstasticStatuslineFlag()}
+set statusline+=%*
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 2
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
+let g:syntastic_loc_list_height = 5
+highlight SyntasticError ctermfg=white ctermbg=161 guifg=white guibg=magenta
+highlight SyntasticWarning ctermfg=white ctermbg=161 guifg=white guibg=magenta
 
+let g:netrw_browse_split = 3
+set encoding=utf-8
 set noerrorbells
 set lazyredraw
-set cursorline
 set scrolloff=999
 set number          "line numbers on
 syntax enable
 set showmatch       "highlight matching braces
-highlight ColorColumn ctermbg=magenta
-call matchadd('ColorColumn', '\%81v', 100)  "highlight 81st column
-
 set tabstop=4       "tabs are 4 spaces wide
 set shiftwidth=4
 set expandtab
-
-
+set backspace=indent,eol,start
 set list
 set listchars=tab:\|┄,trail:♡,eol:¬
+set ttyfast
+
+highlight ColorColumn ctermfg=white ctermbg=093 guifg=white guibg=magenta
+call matchadd('ColorColumn', '\%81v', 100) "highlight 81st column
 
 if has('gui_running')
     set gcr=a:blinkoff0
@@ -89,8 +91,11 @@ if has('gui_running')
     colorscheme solarized
 else
     if isWindows
-        colorscheme elflord "give up on cmd colors
+        colorscheme slate "give up on cmd colors
     else
+        let g:solarized_termcolors=256
+        set term=xterm
+        set t_Co=256
         set background=dark
         colorscheme solarized
     endif
@@ -100,7 +105,10 @@ nnoremap <C-J> <C-W><C-J>
 nnoremap <C-K> <C-W><C-K>
 nnoremap <C-L> <C-W><C-L>
 nnoremap <C-H> <C-W><C-H>
+map <C-n> :NERDTreeToggle<CR>
 inoremap jk <Esc>
+noremap j gj
+noremap k gk
 
 set nobackup    "no swap and backup files
 set noswapfile
