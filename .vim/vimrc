@@ -9,12 +9,16 @@ if isWindows
     set rtp^=$HOME/vimfiles/bundle/nerdtree
     set rtp^=$HOME/vimfiles/bundle/vim-fugitive
     set rtp^=$HOME/vimfiles/bundle/syntastic
+    set rtp^=$HOME/vimfiles/bundle/oceanic-next
+    set rtp^=$HOME/vimfiles/bundle/ctrlp.vim
 else
     set rtp^=~/.vim/bundle/vim-airline
     set rtp^=~/.vim/bundle/vim-airline-themes
     set rtp^=~/.vim/bundle/nerdtree
     set rtp^=~/.vim/bundle/vim-fugitive
     set rtp^=~/.vim/bundle/syntastic
+    set rtp^=~/.vim/bundle/oceanic-next
+    set rtp^=~/.vim/bundle/ctrlp.vim
 endif
 
 filetype plugin indent on
@@ -62,8 +66,10 @@ let g:syntastic_auto_loc_list = 2
 let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
 let g:syntastic_loc_list_height = 5
-highlight SyntasticError ctermfg=white ctermbg=161 guifg=white guibg=magenta
-highlight SyntasticWarning ctermfg=white ctermbg=161 guifg=white guibg=magenta
+
+"NERDTree
+let NERDTreeShowHidden=1
+map <C-n> :NERDTreeToggle<CR>
 
 let g:netrw_browse_split = 3
 set encoding=utf-8
@@ -84,31 +90,28 @@ set ttyfast
 highlight ColorColumn ctermfg=white ctermbg=093 guifg=white guibg=magenta
 call matchadd('ColorColumn', '\%81v', 100) "highlight 81st column
 
-if has('gui_running')
-    set gcr=a:blinkoff0
-    set guifont=DejaVu\ Sans\ Mono\ for\ Powerline:h11
-    set background=dark
-    colorscheme solarized
+if isWindows
+    colorscheme slate "give up on cmd colors
 else
-    if isWindows
-        colorscheme slate "give up on cmd colors
-    else
-        let g:solarized_termcolors=256
-        set term=xterm
-        set t_Co=256
-        set background=dark
-        colorscheme solarized
-    endif
+    set term=xterm
+    set t_Co=256
+    colorscheme OceanicNext
 endif
 
+"splits
 nnoremap <C-J> <C-W><C-J>
 nnoremap <C-K> <C-W><C-K>
 nnoremap <C-L> <C-W><C-L>
 nnoremap <C-H> <C-W><C-H>
-map <C-n> :NERDTreeToggle<CR>
+set splitbelow
+set splitright
+
+let mapleader = '\'
 inoremap jk <Esc>
 noremap j gj
 noremap k gk
+"close buffer without closing window
+map <leader>q :bp<bar>sp<bar>bn<bar>bd<CR>
 
 set nobackup    "no swap and backup files
 set noswapfile

@@ -1,0 +1,8 @@
+if has('nvim')
+    Guifont! DejaVu Sans Mono for Powerline:h10
+else
+    set guifont=DejaVu\ Sans\ Mono\ for\ Powerline:h10
+endif
+set gcr=a:blinkoff0
+set lines=20 columns=85
+colorscheme OceanicNext
