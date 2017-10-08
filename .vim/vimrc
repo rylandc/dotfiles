@@ -4,27 +4,32 @@ filetype off
 let isWindows = has('win32')
 
 if isWindows
-    set rtp^=$HOME/vimfiles/bundle/vim-airline
-    set rtp^=$HOME/vimfiles/bundle/vim-airline-themes
-    set rtp^=$HOME/vimfiles/bundle/nerdtree
-    set rtp^=$HOME/vimfiles/bundle/vim-fugitive
-    set rtp^=$HOME/vimfiles/bundle/syntastic
-    set rtp^=$HOME/vimfiles/bundle/oceanic-next
-    set rtp^=$HOME/vimfiles/bundle/ctrlp.vim
+    let plugPath = '$HOME/vimfiles/bundle'
 else
-    set rtp^=~/.vim/bundle/vim-airline
-    set rtp^=~/.vim/bundle/vim-airline-themes
-    set rtp^=~/.vim/bundle/nerdtree
-    set rtp^=~/.vim/bundle/vim-fugitive
-    set rtp^=~/.vim/bundle/syntastic
-    set rtp^=~/.vim/bundle/oceanic-next
-    set rtp^=~/.vim/bundle/ctrlp.vim
+    let plugPath = '~/.vim/bundle'
 endif
+
+" https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+call plug#begin(plugPath)
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+Plug 'scrooloose/nerdtree'
+Plug 'tpope/vim-fugitive'
+Plug 'vim-syntastic/syntastic'
+Plug 'mhartington/oceanic-next'
+Plug 'kien/ctrlp.vim'
+call plug#end()
+" vim-plug commands:
+" PlugInstall   install plugins
+" PlugUpdate    install/update plugins
+" PlugClean     remove unused plugin directories
+" PlugUpgrade   update vim-plug
+" PlugStatus    check status of plugins
 
 filetype plugin indent on
 
 " airline
-set laststatus=2    "show statusline
+set laststatus=2    " show statusline
 let g:airline_theme='luna'
 let g:airline#extensions#tabline#enabled = 1
 let g:airline_powerline_fonts = 1
@@ -67,7 +72,7 @@ let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
 let g:syntastic_loc_list_height = 5
 
-"NERDTree
+" NERDTree
 let NERDTreeShowHidden=1
 map <C-n> :NERDTreeToggle<CR>
 
@@ -76,10 +81,10 @@ set encoding=utf-8
 set noerrorbells
 set lazyredraw
 set scrolloff=999
-set number          "line numbers on
+set number
 syntax enable
-set showmatch       "highlight matching braces
-set tabstop=4       "tabs are 4 spaces wide
+set showmatch
+set tabstop=4
 set shiftwidth=4
 set expandtab
 set backspace=indent,eol,start
@@ -87,18 +92,7 @@ set list
 set listchars=tab:\|┄,trail:♡,eol:¬
 set ttyfast
 
-highlight ColorColumn ctermfg=white ctermbg=093 guifg=white guibg=magenta
-call matchadd('ColorColumn', '\%81v', 100) "highlight 81st column
-
-if isWindows
-    colorscheme slate "give up on cmd colors
-else
-    set term=xterm
-    set t_Co=256
-    colorscheme OceanicNext
-endif
-
-"splits
+" easier splits
 nnoremap <C-J> <C-W><C-J>
 nnoremap <C-K> <C-W><C-K>
 nnoremap <C-L> <C-W><C-L>
@@ -110,9 +104,21 @@ let mapleader = '\'
 inoremap jk <Esc>
 noremap j gj
 noremap k gk
-"close buffer without closing window
+" close a buffer without closing viewport
 map <leader>q :bp<bar>sp<bar>bn<bar>bd<CR>
 
-set nobackup    "no swap and backup files
+" no swap and backup files
+set nobackup
 set noswapfile
 set viminfo=
+
+highlight ColorColumn ctermfg=white ctermbg=093 guifg=white guibg=magenta
+call matchadd('ColorColumn', '\%81v', 100) " highlight 81st column
+
+if isWindows
+    colorscheme slate " give up on cmd colors
+else
+    set term=xterm
+    set t_Co=256
+    colorscheme OceanicNext
+endif
