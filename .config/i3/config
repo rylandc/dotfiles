@@ -244,14 +244,17 @@ bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume 0 -5% #d
 bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute 0 toggle # mute audio
 
 # Sreen brightness controls
-bindsym XF86MonBrightnessUp exec xbacklight -inc 20 # increase screen brightness
-bindsym XF86MonBrightnessDown exec xbacklight -dec 20 # decrease screen brightness
+bindsym XF86MonBrightnessUp exec xbacklight -inc 10 # increase screen brightness
+bindsym XF86MonBrightnessDown exec xbacklight -dec 10 # decrease screen brightness
 
 # Media player controls
 bindsym XF86AudioPlay exec playerctl play
 bindsym XF86AudioPause exec playerctl pause
 bindsym XF86AudioNext exec playerctl next
 bindsym XF86AudioPrev exec playerctl previous
+
+### polybar ###################################################################
+bindsym $mod+p exec polybar-msg cmd toggle
 
 ### autostart processes #######################################################
 exec --no-startup-id compton
@@ -264,3 +267,4 @@ exec --no-startup-id mate-settings-daemon
 exec --no-startup-id env KEYBASE_AUTOSTART=1 run_keybase
 
 for_window [class="Spotify"] move to workspace 10
+for_window [class="Gnome-calendar"] floating enable move right 755px, move up 175px resize set 30 30
