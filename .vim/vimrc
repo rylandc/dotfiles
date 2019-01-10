@@ -18,6 +18,8 @@ Plug 'tpope/vim-fugitive'
 Plug 'vim-syntastic/syntastic'
 Plug 'mhartington/oceanic-next'
 Plug 'kien/ctrlp.vim'
+Plug 'fatih/vim-go'
+Plug 'dracula/vim',{'as':'dracula'}
 call plug#end()
 " vim-plug commands:
 " PlugInstall   install plugins
@@ -30,7 +32,7 @@ filetype plugin indent on
 
 " airline
 set laststatus=2    " show statusline
-let g:airline_theme='luna'
+let g:airline_theme='dracula'
 let g:airline#extensions#tabline#enabled = 1
 let g:airline_powerline_fonts = 1
 let g:airline#extensions#syntastic#enabled = 1
@@ -71,6 +73,7 @@ let g:syntastic_auto_loc_list = 2
 let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
 let g:syntastic_loc_list_height = 5
+let g:syntastic_go_checkers = ['golint']
 
 " NERDTree
 let NERDTreeShowHidden=1
@@ -116,9 +119,9 @@ highlight ColorColumn ctermfg=white ctermbg=093 guifg=white guibg=magenta
 call matchadd('ColorColumn', '\%81v', 100) " highlight 81st column
 
 if isWindows
-    colorscheme slate " give up on cmd colors
+    colorscheme slate
 else
     set term=xterm
     set t_Co=256
-    colorscheme OceanicNext
+    colorscheme dracula
 endif
