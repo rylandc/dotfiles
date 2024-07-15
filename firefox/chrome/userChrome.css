@@ -1,0 +1,193 @@
+/*
+ * space for window controls in nav bar
+ */
+:root:is([tabsintitlebar], [sizemode='fullscreen']) {
+    --uc-window-control-width: 120px;
+    /* Extra space reserved on both sides of the nav-bar to be able to drag the window */
+    --uc-window-drag-space-pre: 10px;
+    /* left side*/
+    --uc-window-drag-space-post: 10px;
+    /* right side*/
+}
+
+:root:is([tabsintitlebar][sizemode='maximized'], [sizemode='fullscreen']) {
+    --uc-window-drag-space-pre: 0px;
+}
+
+@media (-moz-gtk-csd-available) {
+    :root:is([tabsintitlebar], [sizemode='fullscreen']) {
+        --uc-window-control-width: 84px;
+    }
+}
+
+.titlebar-buttonbox,
+#window-controls {
+    color: var(--toolbar-color);
+}
+
+:root[sizemode='fullscreen']
+    #TabsToolbar
+    > .titlebar-buttonbox-container:last-child,
+:root[uidensity='compact'][sizemode='fullscreen'] #window-controls {
+    height: 32px;
+}
+
+#nav-bar {
+    border-right-width: 1px;
+}
+
+/*#main-window[titlepreface*="​"] #nav-bar {*/
+#main-window[titlepreface*='◂'] #nav-bar {
+    border-inline: var(--uc-window-drag-space-pre, 0px) solid transparent;
+    border-inline-style: solid !important;
+    border-right-width: calc(
+        var(--uc-window-control-width, 0px) +
+            var(--uc-window-drag-space-post, 0px)
+    );
+    background-clip: border-box !important;
+}
+
+/* Rules for window controls on left layout */
+@media (-moz-bool-pref: 'userchrome.force-window-controls-on-left.enabled'),
+    (-moz-gtk-csd-reversed-placement),
+    (-moz-platform: macos) {
+    :root[tabsintitlebar='true'] #nav-bar {
+        border-inline-width: calc(
+                var(--uc-window-control-width, 0px) +
+                    var(--uc-window-drag-space-post, 0px)
+            )
+            var(--uc-window-drag-space-pre, 0px);
+    }
+
+    :root[sizemode='fullscreen']
+        #TabsToolbar
+        > .titlebar-buttonbox-container:last-child,
+    :root[sizemode='fullscreen'] #window-controls {
+        right: unset;
+    }
+}
+
+@media (-moz-bool-pref: 'userchrome.force-window-controls-on-left.enabled') {
+    .titlebar-buttonbox-container {
+        order: -1 !important;
+    }
+
+    .titlebar-buttonbox {
+        flex-direction: row-reverse;
+    }
+}
+
+/**
+ * Hide tabs when Sidebery is open
+ */
+#main-window #titlebar {
+    transition: height 0.1s 0.1s !important;
+}
+
+#main-window #titlebar {
+    height: 3em !important;
+}
+
+#main-window[uidensity='touch'] #titlebar {
+    height: 3.35em !important;
+}
+
+#main-window[uidensity='compact'] #titlebar {
+    height: 2.7em !important;
+}
+
+/*#main-window[titlepreface*="​"] #titlebar { height: 0 !important; }*/
+/*#main-window[titlepreface*="​"] #tabbrowser-tabs { z-index: 0 !important; }*/
+#main-window[titlepreface*='◂'] #titlebar {
+    height: 0 !important;
+}
+
+#main-window[titlepreface*='◂'] #tabbrowser-tabs {
+    z-index: 0 !important;
+}
+
+/**
+ * window controls in nav bar
+ */
+#nav-bar {
+    transition: border-width 0.2s !important;
+}
+
+#main-window #titlebar {
+    /*overflow: visible;*/
+    z-index: 1;
+}
+
+#main-window .titlebar-buttonbox-container {
+    min-height: 3em !important;
+}
+
+#main-window[uidensity='touch'] .titlebar-buttonbox-container {
+    min-height: 3.35em !important;
+}
+
+#main-window[uidensity='compact'] .titlebar-buttonbox-container {
+    min-height: 2.7em !important;
+}
+
+/**
+ * Decrease size of the sidebar header
+ */
+#sidebar-header {
+    font-size: 1.2em !important;
+    padding: 2px 6px 2px 3px !important;
+    overflow: hidden;
+    background-color: inherit;
+}
+
+#sidebar-header #sidebar-close {
+    padding: 3px !important;
+}
+
+#sidebar-header #sidebar-close .toolbarbutton-icon {
+    height: 14px !important;
+}
+
+#main-window[titlepreface*='◂▸ ']
+    #sidebar-box[sidebarcommand='_3c078156-979c-498b-8990-85f7987dd929_-sidebar-action'] {
+    min-width: 48px !important;
+}
+
+#main-window[titlepreface*='◂▸ ']
+    #sidebar-box[sidebarcommand='_3c078156-979c-498b-8990-85f7987dd929_-sidebar-action']
+    #sidebar-header {
+    visibility: collapse;
+}
+
+#main-window[titlepreface*='◂▸ ']
+    #sidebar-box[sidebarcommand='_3c078156-979c-498b-8990-85f7987dd929_-sidebar-action'] {
+    --uc-sidebar-width: 38px !important;
+    --uc-sidebar-hover-width: 250px;
+    --uc-autohide-sidebar-delay: 300ms;
+    position: relative;
+    min-width: var(--uc-sidebar-width) !important;
+    width: var(--uc-sidebar-width) !important;
+    max-width: var(--uc-sidebar-width) !important;
+    z-index: 1;
+}
+
+#main-window[titlepreface*='◂▸ ']
+    #sidebar-box[sidebarcommand='_3c078156-979c-498b-8990-85f7987dd929_-sidebar-action']
+    > #sidebar-splitter {
+    display: none;
+}
+
+#main-window[titlepreface*='◂▸ ']
+    #sidebar-box[sidebarcommand='_3c078156-979c-498b-8990-85f7987dd929_-sidebar-action']
+    > #sidebar {
+    transition: min-width 115ms linear var(--uc-autohide-sidebar-delay) !important;
+    min-width: var(--uc-sidebar-width) !important;
+    will-change: min-width;
+}
+
+#main-window[titlepreface*='◂▸ ']
+    #sidebar-box[sidebarcommand='_3c078156-979c-498b-8990-85f7987dd929_-sidebar-action']:hover
+    > #sidebar {
+    min-width: var(--uc-sidebar-hover-width) !important;
+    transition-delay: 0ms !important;
+}
